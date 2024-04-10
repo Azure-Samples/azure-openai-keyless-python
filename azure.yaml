@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: ai-rag-chat-evaluator
+metadata:
+  template: ai-rag-chat-evaluator@0.0.2
+pipeline:
+  variables:
+    - OPENAI_HOST
+    - AZURE_OPENAI_SERVICE
+    - AZURE_OPENAI_RESOURCE_GROUP
+    - OPENAI_ORGANIZATION
+  secrets:
+    - OPENAI_API_KEY
