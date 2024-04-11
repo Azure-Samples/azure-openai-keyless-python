@@ -9,6 +9,11 @@ load_dotenv()
 token_provider = azure.identity.get_bearer_token_provider(
     azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
 )
+
+if not os.getenv("AZURE_OPENAI_SERVICE") or not os.getenv("AZURE_OPENAI_GPT_DEPLOYMENT"):
+    print("Error: AZURE_OPENAI_SERVICE and AZURE_OPENAI_GPT_DEPLOYMENT environment variables are empty. See README.")
+    exit(1)
+
 client = openai.AzureOpenAI(
     api_version="2024-03-01-preview",
     azure_endpoint=f"https://{os.getenv('AZURE_OPENAI_SERVICE')}.openai.azure.com",
