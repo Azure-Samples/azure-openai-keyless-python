@@ -1,3 +1,4 @@
+import logging
 import os
 
 import azure.identity
@@ -5,14 +6,18 @@ import openai
 from dotenv import load_dotenv
 
 load_dotenv()
+# Change to logging.DEBUG for more verbose logging from Azure and OpenAI SDKs
+logging.basicConfig(level=logging.WARNING)
+
+
+if not os.getenv("AZURE_OPENAI_SERVICE") or not os.getenv("AZURE_OPENAI_GPT_DEPLOYMENT"):
+    logging.warning("AZURE_OPENAI_SERVICE and AZURE_OPENAI_GPT_DEPLOYMENT environment variables are empty. See README.")
+    exit(1)
+
 
 token_provider = azure.identity.get_bearer_token_provider(
     azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
 )
-
-if not os.getenv("AZURE_OPENAI_SERVICE") or not os.getenv("AZURE_OPENAI_GPT_DEPLOYMENT"):
-    print("Error: AZURE_OPENAI_SERVICE and AZURE_OPENAI_GPT_DEPLOYMENT environment variables are empty. See README.")
-    exit(1)
 
 client = openai.AzureOpenAI(
     api_version="2024-03-01-preview",
