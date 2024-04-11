@@ -23,7 +23,11 @@ so that you can use the OpenAI API SDKs with keyless (Entra) authentication. By 
     azd provision
     ```
 
-    It will prompt you to provide an `azd` environment name (like "chat-app"), select a subscription from your Azure account, and select a [location where the OpenAI model is available](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) (like "francecentral"). Then it will provision the resources in your account and deploy the latest code. If you get an error or timeout with deployment, changing the location can help, as there may be availability constraints for the OpenAI resource.
+    It will prompt you to provide an `azd` environment name (like "chat-app"), select a subscription from your Azure account, and select a [location where the OpenAI model is available](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) (like "canadaeast"). Then it will provision the resources in your account and deploy the latest code. If you get an error or timeout with deployment, changing the location can help, as there may be availability constraints for the OpenAI resource. To change the location run: 
+
+    ```shell
+    azd env set AZURE_LOCATION "yournewlocationname"
+    ```
 
 3. When `azd` has finished, you should have an OpenAI account you can use locally when logged into your Azure account. You can output the necessary environment variables into an `.env` file like so:
 
@@ -50,4 +54,6 @@ so that you can use the OpenAI API SDKs with keyless (Entra) authentication. By 
     python example.py
     ```
 
-    This will use the OpenAI API SDK to make a request to the OpenAI API and print the response.
+    This will use the OpenAI API SDK to make a request to the OpenAI API and print the response. 
+    It might take a few minutes for the deployemnet to start working. If you get a connection error
+    wait for a few minutes and then try run the example again.
