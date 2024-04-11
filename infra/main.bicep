@@ -8,6 +8,30 @@ param environmentName string
 @minLength(1)
 @description('Location for the OpenAI resource')
 // https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#standard-deployment-model-availability
+@allowed([
+  'australiaeast'
+  'brazilsouth'
+  'canadaeast'
+  'eastus'
+  'eastus2'
+  'francecentral'
+  'japaneast'
+  'northcentralus'
+  'norwayeast'
+  'southafricanorth'
+  'southcentralus'
+  'southindia'
+  'swedencentral'
+  'switzerlandnorth'
+  'uksouth'
+  'westeurope'
+  'westus'
+])
+@metadata({
+  azd: {
+    type: 'location'
+  }
+})
 param location string
 
 @description('Name of the OpenAI resource group. If not specified, the resource group name will be generated.')
@@ -37,15 +61,17 @@ var prefix = '${environmentName}${resourceToken}'
 var tags = { 'azd-env-name': environmentName }
 
 // Organize resources in a resource group
-resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = if (empty(openAiResourceGroupName)) {
-  name: '${prefix}-rg'
-  location: location
-  tags: tags
-}
+resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' =
+  if (empty(openAiResourceGroupName)) {
+    name: '${prefix}-rg'
+    location: location
+    tags: tags
+  }
 
-resource openAiResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' existing = if (!empty(openAiResourceGroupName)) {
-  name: !empty(openAiResourceGroupName) ? openAiResourceGroupName : resourceGroup.name
-}
+resource openAiResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' existing =
+  if (!empty(openAiResourceGroupName)) {
+    name: !empty(openAiResourceGroupName) ? openAiResourceGroupName : resourceGroup.name
+  }
 
 module openAi 'core/ai/cognitiveservices.bicep' = {
   name: 'openai'
@@ -57,21 +83,22 @@ module openAi 'core/ai/cognitiveservices.bicep' = {
     sku: {
       name: 'S0'
     }
-    deployments: [{
-      name: gptDeploymentName
-      model: {
-        format: 'OpenAI'
-        name: gptModelName
-        version: gptModelVersion
+    deployments: [
+      {
+        name: gptDeploymentName
+        model: {
+          format: 'OpenAI'
+          name: gptModelName
+          version: gptModelVersion
+        }
+        sku: {
+          name: 'Standard'
+          capacity: gptDeploymentCapacity
+        }
       }
-      sku: {
-        name: 'Standard'
-        capacity: gptDeploymentCapacity
-      }
-    }]
+    ]
   }
 }
-
 
 // USER ROLES
 module openAiRoleUser 'core/security/role.bicep' = {
@@ -83,7 +110,6 @@ module openAiRoleUser 'core/security/role.bicep' = {
     principalType: 'User'
   }
 }
-
 
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
