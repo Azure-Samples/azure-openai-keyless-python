@@ -56,14 +56,13 @@ so that you can use the OpenAI API SDKs with keyless (Entra) authentication. By 
 ## Creating a new azd enviroment 
 
 1. If you'd like to create a new Python project, you can create a new azd environment for it.
-
 Create a new environment and set it as the default by running:
 
     ```shell
     azd env new <environment>
     ```
 
-2. You can view the new environment and any previous environments you created by looking in the `.azure`folder, or by running the command: 
+2. You can view the new environment and any previous environments you created by looking in the `.azure` folder, or by running the command: 
 
     ```shell
     azd env list
