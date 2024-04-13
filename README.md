@@ -53,9 +53,9 @@ so that you can use the OpenAI API SDKs with keyless (Entra) authentication. By 
     This will use the OpenAI API SDK to make a request to the OpenAI API and print the response.
 
 
-## Creating a new azd enviroment 
+## Creating a new Azure OpenAI deployment
 
-1. If you'd like to create a new Python project, you can create a new azd environment for it.
+1. If you'd like to deploy a new Azure OpenAI deployment, the easiest way is to create a new `azd` environment for it.
 Create a new environment and set it as the default by running:
 
     ```shell
