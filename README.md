@@ -54,4 +54,4 @@ so that you can use the OpenAI API SDKs with keyless (Entra) authentication. By 
     python example.py
     ```
 
-    This will use the OpenAI API SDK to make a request to the OpenAI API and print the response. 
+    This will use the OpenAI API SDK to make a request to the OpenAI API and print the response.
