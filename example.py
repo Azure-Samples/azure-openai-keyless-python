@@ -15,9 +15,8 @@ if not os.getenv("AZURE_OPENAI_SERVICE") or not os.getenv("AZURE_OPENAI_GPT_DEPL
     exit(1)
 
 
-token_provider = azure.identity.get_bearer_token_provider(
-    azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
-)
+credential = azure.identity.DefaultAzureCredential()
+token_provider = azure.identity.get_bearer_token_provider(credential, "https://cognitiveservices.azure.com/.default")
 
 client = openai.AzureOpenAI(
     api_version="2024-03-01-preview",
