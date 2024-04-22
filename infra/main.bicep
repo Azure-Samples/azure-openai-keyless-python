@@ -83,6 +83,7 @@ module openAi 'core/ai/cognitiveservices.bicep' = {
     sku: {
       name: 'S0'
     }
+    disableLocalAuth: true
     deployments: [
       {
         name: gptDeploymentName
