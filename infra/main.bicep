@@ -38,12 +38,12 @@ param location string
 param openAiResourceGroupName string = ''
 
 @description('Name of the GPT model to deploy')
-param gptModelName string = 'gpt-35-turbo'
+param gptModelName string = 'gpt-4o'
 
 @description('Version of the GPT model to deploy')
 // See version availability in this table:
 // https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-preview-models
-param gptModelVersion string = '0125'
+param gptModelVersion string = '2024-05-13'
 
 @description('Name of the model deployment')
 param gptDeploymentName string = 'mygptdeployment'
@@ -78,7 +78,6 @@ module openAi 'core/ai/cognitiveservices.bicep' = {
   scope: openAiResourceGroup
   params: {
     name: '${prefix}-openai'
-    location: location
     tags: tags
     sku: {
       name: 'S0'
@@ -93,7 +92,7 @@ module openAi 'core/ai/cognitiveservices.bicep' = {
           version: gptModelVersion
         }
         sku: {
-          name: 'Standard'
+          name: 'GlobalStandard'
           capacity: gptDeploymentCapacity
         }
       }
