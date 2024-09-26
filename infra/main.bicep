@@ -34,9 +34,6 @@ param environmentName string
 })
 param location string
 
-@description('Name of the OpenAI resource group. If not specified, the resource group name will be generated.')
-param openAiResourceGroupName string = ''
-
 @description('Name of the GPT model to deploy')
 param gptModelName string = 'gpt-35-turbo'
 
@@ -45,8 +42,8 @@ param gptModelName string = 'gpt-35-turbo'
 // https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-preview-models
 param gptModelVersion string = '0125'
 
-@description('Name of the model deployment')
-param gptDeploymentName string = 'mygptdeployment'
+@description('Name of the model deployment (can be different from the model name)')
+param gptDeploymentName string = 'gpt-35-turbo'
 
 @description('Capacity of the GPT deployment')
 // You can increase this, but capacity is limited per model/region, so you will get errors if you go over
@@ -61,27 +58,27 @@ var prefix = '${environmentName}${resourceToken}'
 var tags = { 'azd-env-name': environmentName }
 
 // Organize resources in a resource group
-resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' =
-  if (empty(openAiResourceGroupName)) {
+resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
     name: '${prefix}-rg'
     location: location
     tags: tags
-  }
+}
 
-resource openAiResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' existing =
-  if (!empty(openAiResourceGroupName)) {
-    name: !empty(openAiResourceGroupName) ? openAiResourceGroupName : resourceGroup.name
-  }
-
-module openAi 'core/ai/cognitiveservices.bicep' = {
+var openAiServiceName = '${prefix}-openai'
+module openAi 'br/public:avm/res/cognitive-services/account:0.5.4' = {
   name: 'openai'
-  scope: openAiResourceGroup
+  scope: resourceGroup
   params: {
-    name: '${prefix}-openai'
+    name: openAiServiceName
     location: location
     tags: tags
-    sku: {
-      name: 'S0'
+    kind: 'OpenAI'
+    sku: 'S0'
+    customSubDomainName: openAiServiceName
+    publicNetworkAccess: 'Enabled'
+    networkAcls: {
+      defaultAction: 'Allow'
+      bypass: 'AzureServices'
     }
     disableLocalAuth: true
     deployments: [
@@ -98,17 +95,13 @@ module openAi 'core/ai/cognitiveservices.bicep' = {
         }
       }
     ]
-  }
-}
-
-// USER ROLES
-module openAiRoleUser 'core/security/role.bicep' = {
-  scope: openAiResourceGroup
-  name: 'openai-role-user'
-  params: {
-    principalId: principalId
-    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' // Cognitive Services OpenAI User
-    principalType: 'User'
+    roleAssignments: [
+      {
+        principalId: principalId
+        roleDefinitionIdOrName: 'Cognitive Services OpenAI User'
+        principalType: 'User'
+      }
+    ]
   }
 }
 
