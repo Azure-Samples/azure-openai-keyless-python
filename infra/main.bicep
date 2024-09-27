@@ -75,12 +75,10 @@ module openAi 'br/public:avm/res/cognitive-services/account:0.7.1' = {
     kind: 'OpenAI'
     sku: 'S0'
     customSubDomainName: openAiServiceName
-    publicNetworkAccess: 'Enabled'
     networkAcls: {
       defaultAction: 'Allow'
       bypass: 'AzureServices'
     }
-    disableLocalAuth: true
     deployments: [
       {
         name: gptDeploymentName
