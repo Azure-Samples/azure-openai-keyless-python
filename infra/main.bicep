@@ -53,6 +53,11 @@ param gptDeploymentCapacity int = 30
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
 
+@description('Non-empty if the deployment is running on GitHub Actions')
+param runningOnGitHub string = ''
+
+var principalType = empty(runningOnGitHub) ? 'User' : 'ServicePrincipal'
+
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var prefix = '${environmentName}${resourceToken}'
 var tags = { 'azd-env-name': environmentName }
@@ -97,7 +102,7 @@ module openAi 'br/public:avm/res/cognitive-services/account:0.7.1' = {
       {
         principalId: principalId
         roleDefinitionIdOrName: 'Cognitive Services OpenAI User'
-        principalType: 'User'
+        principalType: principalType
       }
     ]
   }

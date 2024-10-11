@@ -10,6 +10,9 @@
     },
     "principalId": {
       "value": "${AZURE_PRINCIPAL_ID}"
+    },
+    "runningOnGitHub": {
+      "value": "${GITHUB_ACTIONS}"
     }
   }
 }
