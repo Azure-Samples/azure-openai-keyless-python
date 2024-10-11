@@ -1,3 +1,18 @@
+<!--
+---
+name: Azure OpenAI resource with keyless authentication
+description: Provision an Azure OpenAI resource with keyless authentication and use the Python OpenAI SDK to connect to it.
+languages:
+- python
+- bicep
+- azdeveloper
+products:
+- azure-openai
+- azure
+page_type: sample
+urlFragment: azure-openai-keyless-python
+---
+-->
 # Azure OpenAI Keyless Deployment
 
 The purpose of this repository is to provision an Azure OpenAI account with an RBAC role permission for your user account to access,
