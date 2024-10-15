@@ -77,3 +77,25 @@ so that you can use the OpenAI API SDKs with keyless (Entra) authentication. By 
     ```
 
     This will use the OpenAI API SDK to make a request to the OpenAI API and print the response.
+
+
+## Creating a new Azure OpenAI deployment
+
+1. If you'd like to deploy a new Azure OpenAI deployment, the easiest way is to create a new `azd` environment for it.
+Create a new environment and set it as the default by running:
+
+    ```shell
+    azd env new <environment>
+    ```
+
+2. You can view the new environment and any previous environments you created by looking in the `.azure` folder, or by running the command: 
+
+    ```shell
+    azd env list
+    ```
+
+3. To change back to the previous azd environment:
+
+    ```shell
+    azd env select <environment> 
+    ```
