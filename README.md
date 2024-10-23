@@ -1,6 +1,6 @@
 <!--
 ---
-name: Azure OpenAI resource with keyless authentication
+name: Azure OpenAI resource with keyless auth (Python)
 description: Provision an Azure OpenAI resource with keyless authentication and use the Python OpenAI SDK to connect to it.
 languages:
 - python
