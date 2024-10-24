@@ -19,8 +19,9 @@ urlFragment: azure-openai-keyless-python
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Azure-Samples/azure-openai-keyless-python)
 
 The purpose of this repository is to provision an Azure OpenAI account with an RBAC role permission for your user account to access,
-so that you can use the OpenAI API SDKs with keyless (Entra) authentication. By default, the account will include a gpt-3.5 model, but you can modify `infra/main.bicep` to deploy other models instead.
+so that you can use the OpenAI API SDKs with keyless (Entra) authentication.
 
+* [Features](#features)
 * [Getting started](#getting-started)
   * [GitHub Codespaces](#github-codespaces)
   * [VS Code Dev Containers](#vs-code-dev-containers)
@@ -31,6 +32,13 @@ so that you can use the OpenAI API SDKs with keyless (Entra) authentication. By 
   * [Costs](#costs)
   * [Security guidelines](#security-guidelines)
 * [Resources](#resources)
+
+## Features
+
+* Provisions an Azure OpenAI account with keyless authentication enabled
+* Grants the "Cognitive Services OpenAI User" RBAC role to your user account
+* Deploys a gpt-3.5 model by default, but you can modify the [Bicep template](infra/main.bicep) to deploy other models
+* Example script uses the [openai](https://pypi.org/project/openai/) Python package to make a request to the Azure OpenAI API
 
 ## Getting started
 
