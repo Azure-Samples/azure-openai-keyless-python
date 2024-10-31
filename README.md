@@ -37,7 +37,7 @@ so that you can use the OpenAI API SDKs with keyless (Entra) authentication.
 
 * Provisions an Azure OpenAI account with keyless authentication enabled
 * Grants the "Cognitive Services OpenAI User" RBAC role to your user account
-* Deploys a gpt-3.5 model by default, but you can modify the [Bicep template](infra/main.bicep) to deploy other models
+* Deploys a gpt-4o-mini model by default, but you can modify the [Bicep template](infra/main.bicep) to deploy other models
 * Example script uses the [openai](https://pypi.org/project/openai/) Python package to make a request to the Azure OpenAI API
 
 ### Architecture diagram
