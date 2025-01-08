@@ -18,6 +18,11 @@ if not os.getenv("AZURE_OPENAI_SERVICE") or not os.getenv("AZURE_OPENAI_GPT_DEPL
 credential = azure.identity.DefaultAzureCredential()
 token_provider = azure.identity.get_bearer_token_provider(credential, "https://cognitiveservices.azure.com/.default")
 
+client = openai.OpenAI(
+    base_url="https://Phi-3-5-mini-instruct-klelm.eastus2.models.ai.azure.com/v1/",
+    api_key=os.getenv("AZURE_INFERENCE_KEY"),
+)
+
 client = openai.AzureOpenAI(
     api_version="2024-03-01-preview",
     azure_endpoint=f"https://{os.getenv('AZURE_OPENAI_SERVICE')}.openai.azure.com",
@@ -25,7 +30,6 @@ client = openai.AzureOpenAI(
 )
 
 response = client.chat.completions.create(
-    # For Azure OpenAI, the model parameter must be set to the deployment name
     model=os.getenv("AZURE_OPENAI_GPT_DEPLOYMENT"),
     temperature=0.7,
     n=1,

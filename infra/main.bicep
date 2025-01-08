@@ -40,20 +40,20 @@ param environmentName string
 param location string
 
 @description('Name of the GPT model to deploy')
-param gptModelName string = 'gpt-4o-mini'
+param gptModelName string = 'Phi-3.5-mini-instruct'
 
 @description('Version of the GPT model to deploy')
 // See version availability in this table:
 // https://learn.microsoft.com/azure/ai-services/openai/concepts/models?tabs=python-secure%2Cglobal-standard%2Cstandard-chat-completions#models-by-deployment-type
-param gptModelVersion string = '2024-07-18'
+param gptModelVersion string = '2'
 
 @description('Name of the model deployment (can be different from the model name)')
-param gptDeploymentName string = 'gpt-4o-mini'
+param gptDeploymentName string = 'Phi-3.5-mini-instruct'
 
 @description('Capacity of the GPT deployment')
 // You can increase this, but capacity is limited per model/region, so you will get errors if you go over
 // https://learn.microsoft.com/en-us/azure/ai-services/openai/quotas-limits
-param gptDeploymentCapacity int = 30
+param gptDeploymentCapacity int = 1
 
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
@@ -82,7 +82,7 @@ module openAi 'br/public:avm/res/cognitive-services/account:0.7.1' = {
     name: openAiServiceName
     location: location
     tags: tags
-    kind: 'OpenAI'
+    kind: 'AIServices'
     sku: 'S0'
     customSubDomainName: openAiServiceName
     networkAcls: {
@@ -93,7 +93,7 @@ module openAi 'br/public:avm/res/cognitive-services/account:0.7.1' = {
       {
         name: gptDeploymentName
         model: {
-          format: 'OpenAI'
+          format: 'Microsoft'
           name: gptModelName
           version: gptModelVersion
         }
